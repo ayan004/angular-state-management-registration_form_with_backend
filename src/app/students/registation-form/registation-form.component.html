@@ -1,0 +1,536 @@
+<!--
+Author: Colorlib
+Author URL: https://colorlib.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Register Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript">
+      addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <!-- web font -->
+    <link
+      href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i"
+      rel="stylesheet"
+    />
+    <!-- //web font -->
+  </head>
+  <body>
+    <!-- main -->
+    <div class="main-w3layouts wrapper">
+      <h1>Student's SignUp Form</h1>
+      <div class="main-agileinfo">
+        <div class="agileits-top">
+          <form [formGroup]="signupForm" (ngSubmit)="postData()">
+            <!-- firstname -->
+            <div>
+              <input
+                class="text"
+                type="text"
+                name="firstname"
+                placeholder="First name"
+                required
+                formControlName="firstname"
+              />
+              <span
+                class="warning"
+                *ngIf="
+                  signupForm.get('firstname').touched &&
+                  signupForm.get('firstname').hasError('minlength')
+                "
+              >
+                * first name should be minimum 2 characters
+              </span>
+              <span
+                class="warning"
+                *ngIf="
+                  signupForm.get('firstname').touched &&
+                  signupForm.get('firstname').hasError('maxlength')
+                "
+              >
+                * first name should be maximum 16 characters
+              </span>
+              <br />
+            </div>
+            <!-- lastname -->
+            <div>
+              <input
+                class="text"
+                type="text"
+                name="lastname"
+                placeholder="Last name"
+                required
+                formControlName="lastname"
+              />
+              <span
+                class="warning"
+                *ngIf="
+                  signupForm.get('lastname').touched &&
+                  signupForm.get('lastname').hasError('minlength')
+                "
+              >
+                * last name should be minimum 2 characters
+              </span>
+              <span
+                class="warning"
+                *ngIf="
+                  signupForm.get('lastname').touched &&
+                  signupForm.get('lastname').hasError('maxlength')
+                "
+              >
+                * last name should be maximum 16 characters
+              </span>
+              <br />
+            </div>
+            <!-- email -->
+            <div>
+              <input
+                class="text email"
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+                formControlName="email"
+              />
+              <span
+                class="warning"
+                *ngIf="
+                  signupForm.get('email').touched &&
+                  signupForm.get('email').hasError('invalidEmail')
+                "
+              >
+                * email don't exist
+              </span>
+              <br />
+            </div>
+            <div>
+              <input
+                class="text"
+                type="text"
+                id="phone_number_country_code"
+                name="phone_number_country_code"
+                required
+                formControlName="phone_number_country_code"
+                (keypress)="onKeyPressOnlyNumbAndPlus($event)"
+              />
+              <input
+                class="text phone_number"
+                type="text"
+                id="phone_number"
+                name="phone_number"
+                placeholder="Phone Number"
+                required
+                formControlName="phone_number"
+                (keypress)="onKeyPressOnlyNumb($event)"
+              />
+            </div>
+            <div>
+              <div>
+                <span
+                  id="phone_number_country_code_warning"
+                  *ngIf="
+                    signupForm.get('phone_number_country_code').touched &&
+                    signupForm
+                      .get('phone_number_country_code')
+                      .hasError('phoneNumberCountryCodeInvalid')
+                  "
+                  class="warning"
+                  >* first character should be '+' symbol</span
+                >
+                <span
+                  id="phone_number_country_code_warning"
+                  *ngIf="
+                    signupForm.get('phone_number_country_code').touched &&
+                    signupForm
+                      .get('phone_number_country_code')
+                      .hasError('invalid2ndcharacter')
+                  "
+                  class="warning"
+                  >* cannot leave country code blank</span
+                >
+                <span
+                  *ngIf="
+                    signupForm.get('phone_number_country_code').touched &&
+                    signupForm
+                      .get('phone_number_country_code')
+                      .hasError('maxlength')
+                  "
+                  class="warning"
+                  >* country code cannot exceed four digits</span
+                >
+              </div>
+              <span
+                id="phone_number_warning"
+                *ngIf="
+                  signupForm.get('phone_number').touched &&
+                  signupForm.get('phone_number').hasError('phoneNumberInvalid')
+                "
+                class="warning"
+                >* phone number should be exact 10 numeric digits</span
+              >
+            </div>
+            <br />
+            <!-- website -->
+            <div>
+              <input
+                class="text"
+                type="text"
+                name="website"
+                placeholder="Website"
+                required
+                formControlName="website"
+              />
+              <span
+                *ngIf="
+                  signupForm.get('website').touched &&
+                  signupForm.get('website').hasError('required')
+                "
+                class="warning"
+                >* website cannot be blank</span
+              >
+              <span
+                *ngIf="
+                  signupForm.get('website').touched &&
+                  signupForm.get('website').hasError('invalidWebsite')
+                "
+                class="warning"
+                >* entered website don't exist</span
+              >
+            </div>
+            <br />
+            <!-- gender -->
+            <p class="text">Select your gender</p>
+            <br />
+            <input
+              type="radio"
+              id="male"
+              name="gender"
+              value="male"
+              formControlName="gender"
+              required
+            />
+            <label for="male" class="radioBtn">Male</label> &nbsp;
+            <input
+              type="radio"
+              id="female"
+              name="gender"
+              value="female"
+              formControlName="gender"
+              required
+            />
+            <label for="female" class="radioBtn">Female</label> &nbsp;
+            <input
+              type="radio"
+              id="other"
+              name="gender"
+              value="other"
+              formControlName="gender"
+              required
+            />
+            <label for="other" class="radioBtn">Other</label>
+            <br /><br />
+            <div id="address">
+              <p class="">Address</p>
+              <br />
+              <input
+                class="text"
+                type="text"
+                name="HouseNameOrNumber/RoadName"
+                placeholder="House Name Or Number/ Road Name"
+                required
+                formControlName="houseNameOrNumberOrRoadName"
+              />
+              <br />
+              <input
+                class="text"
+                type="text"
+                name="landmark"
+                placeholder="Landmark"
+                required
+                formControlName="landmark"
+              />
+              <br />
+              <input
+                class="text"
+                type="text"
+                name="city/village"
+                placeholder="City/ Village Name"
+                required
+                formControlName="cityOrVillage"
+              />
+              <label for="state">State</label>
+              <select
+                id="state"
+                name="state"
+                class="text email"
+                formControlName="state"
+                required
+              >
+                <option value="westBengal" class="options">West Bengal</option>
+                <option value="jammu&Kashmir" class="options">
+                  Jammu & Kashmir
+                </option>
+                <option value="haryana" class="options">Haryana</option>
+                <option value="punjab" class="options">Punjab</option>
+                <option value="uttarPradesh" class="options">
+                  Uttar Pradesh
+                </option>
+                <option value="uttarakhand" class="options">Uttarakhand</option>
+                <option value="tamilNadu" class="options">Tamil Nadu</option>
+                <option value="kerala" class="options">Kerala</option>
+                <option value="karnataka" class="options">Karnataka</option>
+                <option value="rajasthan" class="options">Rajasthan</option>
+                <option value="gujrat" class="options">Gujrat</option>
+                <option value="delhi" class="options">Delhi</option>
+                <option value="sikkim" class="options">Sikkim</option>
+                <option value="nagaland" class="options">Nagaland</option>
+                <option value="mizoram" class="options">Mizoram</option>
+                <option value="assam" class="options">Assam</option>
+                <option value="tripura" class="options">Tripura</option>
+                <option value="manipur" class="options">Manipur</option>
+                <option value="madhyaPradesh" class="options">
+                  Madhya Pradesh
+                </option>
+                <option value="himachalPradesh" class="options">
+                  Himachal Pradesh
+                </option>
+                <option value="andhraPradesh" class="options">
+                  Andhra Pradesh
+                </option>
+                <option value="arunachalPradesh" class="options">
+                  Arunachal Pradesh
+                </option>
+                <option value="bihar" class="options">Bihar</option>
+                <option value="goa" class="options">Goa</option>
+                <option value="chattisgarh" class="options">Chattisgarh</option>
+                <option value="jharkhand" class="options">Jharkhand</option>
+                <option value="meghalaya" class="options">Meghalaya</option>
+                <option value="odisha" class="options">Odisha</option>
+                <option value="telangana" class="options">Telangana</option>
+              </select>
+              <br />
+              <label for="country">Country</label>
+              <select
+                id="country"
+                name="country"
+                class="text"
+                formControlName="country"
+                required
+              >
+                <!-- ng-model="selected"
+                ng-init="selected='india'" -->
+                <option value="india" class="options" selected>India</option>
+                <option value="nepal" class="options">Nepal</option>
+                <option value="bangladesh" class="options">Bangladesh</option>
+                <option value="bhutan" class="options">Bhutan</option>
+              </select>
+              <br />
+              <br />
+              <!-- pincode -->
+              <div>
+                <input
+                  class="text"
+                  type="text"
+                  name="pincode"
+                  placeholder="Pincode"
+                  required
+                  formControlName="pincode"
+                  (keypress)="onKeyPressOnlyNumb($event)"
+                />
+                <span
+                  *ngIf="
+                    signupForm.get('pincode').touched &&
+                    signupForm.get('pincode').hasError('pincodeInvalid')
+                  "
+                  class="warning"
+                  >* invalid indian pincode</span
+                >
+              </div>
+              <br />
+            </div>
+            <!-- password -->
+            <div>
+              <input
+                class="text"
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                formControlName="password"
+              />
+              <span
+                class="warning"
+                *ngIf="
+                  signupForm.get('password').touched &&
+                  signupForm.get('password').hasError('noCapitalLetter')
+                "
+                style="color: red"
+                >* should contain one capital letter<br />
+              </span>
+              <span
+                class="warning"
+                *ngIf="
+                  signupForm.get('password').touched &&
+                  signupForm.get('password').hasError('noSmallLetter')
+                "
+                style="color: red"
+                >* should contain one lowercase letter<br />
+              </span>
+              <span
+                class="warning"
+                *ngIf="
+                  signupForm.get('password').touched &&
+                  signupForm.get('password').hasError('noNumber')
+                "
+                style="color: red"
+                >* should contain one number<br />
+              </span>
+              <span
+                class="warning"
+                *ngIf="
+                  signupForm.get('password').touched &&
+                  signupForm.get('password').hasError('noSpecialCharacter')
+                "
+                style="color: red"
+                >* should contain one special character <br />
+              </span>
+              <span
+                class="warning"
+                *ngIf="
+                  signupForm.get('password').hasError('consecutiveCharacters')
+                "
+                style="color: red"
+                >* you can't enter consecutive characters because its easy to
+                guess <br />
+              </span>
+              <!-- signupForm.get('password').touched && -->
+              <br />
+            </div>
+            <!-- CONFIRM PASSWORD -->
+            <div>
+              <input
+                class="text"
+                type="password"
+                name="confirm_password"
+                placeholder="Confirm Password"
+                required
+                formControlName="confirm_password"
+              />
+              <span
+                *ngIf="
+                  signupForm.get('confirm_password').touched &&
+                  signupForm
+                    .get('confirm_password')
+                    .hasError('notEqualToPassword')
+                "
+                class="warning"
+                >* confirm password should match password
+              </span>
+              <br />
+            </div>
+            <div class="wthree-text">
+              <label class="anim">
+                <input
+                  type="checkbox"
+                  class="checkbox"
+                  formControlName="checkbox"
+                  required
+                />
+                <!-- required -->
+                <span>I Agree To The Terms & Conditions</span>
+              </label>
+              <div class="clear"></div>
+            </div>
+            <div id="mandateFieldsWarning" class="warning">
+              <span
+                *ngIf="
+                  signupForm.get('firstname').touched &&
+                  signupForm.get('lastname').touched &&
+                  signupForm.get('email').touched &&
+                  signupForm.get('phone_number_country_code').touched &&
+                  signupForm.get('phone_number').touched &&
+                  signupForm.get('website').touched &&
+                  signupForm.get('gender').touched &&
+                  signupForm.get('houseNameOrNumberOrRoadName').touched &&
+                  signupForm.get('landmark').touched &&
+                  signupForm.get('cityOrVillage').touched &&
+                  signupForm.get('state').touched &&
+                  signupForm.get('country').touched &&
+                  signupForm.get('pincode').touched &&
+                  signupForm.get('password').touched &&
+                  signupForm.get('confirm_password').touched &&
+                  signupForm.get('checkbox').touched &&
+                  (signupForm.get('firstname').hasError('required') ||
+                    signupForm.get('lastname').hasError('required') ||
+                    signupForm.get('email').hasError('required') ||
+                    signupForm
+                      .get('phone_number_country_code')
+                      .hasError('required') ||
+                    signupForm.get('phone_number').hasError('required') ||
+                    signupForm.get('website').hasError('required') ||
+                    signupForm.get('gender').hasError('required') ||
+                    signupForm
+                      .get('houseNameOrNumberOrRoadName')
+                      .hasError('required') ||
+                    signupForm.get('landmark').hasError('required') ||
+                    signupForm.get('cityOrVillage').hasError('required') ||
+                    signupForm.get('state').hasError('required') ||
+                    signupForm.get('country').hasError('required') ||
+                    signupForm.get('pincode').hasError('required') ||
+                    signupForm.get('password').hasError('required') ||
+                    signupForm.get('confirm_password').hasError('required') ||
+                    signupForm.get('checkbox').hasError('required'))
+                "
+              >
+                * all fields are mandatory
+              </span>
+            </div>
+            <input
+              type="submit"
+              value="SIGNUP"
+              [disabled]="!signupForm.valid"
+            />
+          </form>
+          <div id="connectionErrorOrDataSubmitted">
+            <!-- <span>Error connecting to the server</span> -->
+          </div>
+          <button
+            type="button"
+            class="btn btn-success btn-lg"
+            class="buttons"
+            id="goBackBtn"
+            (click)="goBackBtn()"
+          >
+            GO BACK
+          </button>
+        </div>
+      </div>
+      <!-- copyright -->
+      <div class="colorlibcopy-agile">
+        <p>
+          © 2018 Colorlib Signup Form. All rights reserved | Design by
+          <a href="https://colorlib.com/" target="_blank">AyLab</a>
+        </p>
+      </div>
+      <!-- //copyright -->
+      <ul class="colorlib-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <!-- //main -->
+  </body>
+</html>

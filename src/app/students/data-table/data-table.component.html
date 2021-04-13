@@ -1,0 +1,44 @@
+<nav class="navbar navbar-light bg-light navbar-fix-right">
+  <form class="form-inline">
+    <button
+      class="btn btn-sm btn-outline-secondary"
+      type="button"
+      (click)="logoutBtn()"
+    >
+      Log Out
+    </button>
+  </form>
+</nav>
+
+<div id="table">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Website</th>
+        <th scope="col">Contact No.</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Address</th>
+        <th scope="col">Landmark</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of allRegisteredStudents; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ student.username }}</td>
+        <td>{{ student.email }}</td>
+        <td>{{ student.website }}</td>
+        <td>{{ student.phone_number }}</td>
+        <td>{{ student.gender }}</td>
+        <td>
+          {{ student.houseNameOrNumberOrRoadName }},
+          {{ student.cityOrVillage }}, {{ student.state }},
+          {{ student.country }}, {{ student.pincode }}
+        </td>
+        <td>{{ student.landmark }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
